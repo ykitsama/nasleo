@@ -1,1 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💕Nicsam spaceeee!💕</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Our ndeetni</h1>
+    <p class="subtitle">For our date ideas, wishlist, songs & memories</p>
+
+    <!-- Add Entry -->
+    <div class="entry-input">
+      <input type="text" id="item" placeholder="Write something sweet...">
+      <select id="category" onchange="toggleSongUpload()">
+        <option value="date">Date Idea</option>
+        <option value="wishlist">Wishlist</option>
+        <option value="song">Song</option>
+      </select>
+      <input type="file" id="songFile" accept="audio/mp3" style="display: none;">
+      <button onclick="addItem()">Add</button>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters">
+      <button onclick="filterItems('all')">All</button>
+      <button onclick="filterItems('date')">Date Ideas</button>
+      <button onclick="filterItems('wishlist')">Wishlist</button>
+      <button onclick="filterItems('song')">Songs</button>
+    </div>
+
+    <!-- List -->
+    <ul id="list"></ul>
+
+    <!-- Special Video Section -->
+    <div class="video-section">
+      <h2>Our Special Video</h2>
+      <video controls width="100%" id="specialVideo">
+        <source src="video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <p style="font-size: 12px; color:#888;">(Replace <b>video.mp4</b> in the folder with your own!)</p>
+    </div>
+
+    <!-- Photo Gallery Section -->
+    <div class="photo-section">
+      <h2>Our Gallery</h2>
+      <input type="file" id="photoUpload" accept="image/*" multiple onchange="uploadPhotos()">
+      <div class="gallery" id="gallery"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
 
