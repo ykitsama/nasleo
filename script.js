@@ -19,17 +19,23 @@ function render(filter = "all") {
     .forEach((item, index) => {
       let li = document.createElement("li");
 
+      // Checkbox
+      let checked = item.completed ? "checked" : "";
+      let textStyle = item.completed ? "style='text-decoration: line-through; opacity: 0.6;'" : "";
+
       if (item.category === "song" && item.file) {
-        // Song entry with audio player
+        // Song entry
         li.innerHTML = `
-          <span>${item.emoji} ${item.text}</span>
+          <input type="checkbox" onchange="toggleComplete(${index})" ${checked}>
+          <span ${textStyle}>${item.emoji} ${item.text}</span>
           <audio controls src="${item.file}"></audio>
           <button onclick="deleteItem(${index})">❌</button>
         `;
       } else {
         // Normal entry
         li.innerHTML = `
-          <span>${item.emoji} ${item.text}</span>
+          <input type="checkbox" onchange="toggleComplete(${index})" ${checked}>
+          <span ${textStyle}>${item.emoji} ${item.text}</span>
           <button onclick="deleteItem(${index})">❌</button>
         `;
       }
@@ -49,7 +55,7 @@ function addItem() {
     const reader = new FileReader();
     reader.onload = function(e) {
       let emoji = "🎶";
-      items.push({ text: text || file.name, category, emoji, file: e.target.result });
+      items.push({ text: text || file.name, category, emoji, file: e.target.result, completed: false });
       saveItems();
       render();
       resetInputs();
@@ -58,18 +64,26 @@ function addItem() {
   } else {
     if (text === "") return;
     let emoji = category === "date" ? "🌸" : category === "wishlist" ? "🎁" : "🎶";
-    items.push({ text, category, emoji });
+    items.push({ text, category, emoji, completed: false });
     saveItems();
     render();
     resetInputs();
   }
 }
 
+function toggleComplete(index) {
+  items[index].completed = !items[index].completed;
+  saveItems();
+  render();
+}
+
+// === Reset Inputs ===
 function resetInputs() {
   document.getElementById("item").value = "";
   document.getElementById("songFile").value = "";
 }
 
+// === Delete ===
 function deleteItem(index) {
   items.splice(index, 1);
   saveItems();
@@ -86,7 +100,7 @@ function toggleSongUpload() {
   songFileInput.style.display = category === "song" ? "block" : "none";
 }
 
-// === Photo Upload / Gallery ===
+// === Photos / Gallery ===
 function uploadPhotos() {
   const fileInput = document.getElementById("photoUpload");
   if (fileInput.files.length > 0) {
@@ -125,4 +139,3 @@ function deletePhoto(index) {
 // === Init ===
 render();
 renderGallery();
-
