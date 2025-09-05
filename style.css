@@ -90,6 +90,16 @@ h1 {
 }
 
 #list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#list li span {
+  flex: 1;
+  text-align: left;
+}
+
+#list li {
   background: #fff5f7;
   margin: 8px 0;
   padding: 12px;
